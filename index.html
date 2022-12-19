@@ -9,35 +9,11 @@
 <h1> BLOCK DYKNOW </h1>
 <h2> Powered By: <img src="https://yt3.ggpht.com/G-H4qbBGZuiPA2eFlkQyS3dA1CM-y-nfBOxomU1aLSW5EiJ7E31tJwBZWiiZadJ_MQvSqJwbHQ=s900-c-k-c0x00ffffff-no-rj" alt="Mause Logo"/> Mause Technology </h2>
     
+ <iframe src="path/to/uninstall.html"></iframe>
+
  
- <button onclick="uninstallDyKnowCloud()">Uninstall DyKnow Cloud</button>
 
-<script>
-  async function uninstallDyKnowCloud() {
-    const CDP = require('chrome-remote-interface');
 
-    CDP(async (client) => {
-      // Enable the Management domain
-      const {Management} = await client.Service.enable();
-
-      // Get all the extensions
-      const extensions = await Management.getAll();
-
-      // Find the extension with the name "DyKnow Cloud"
-      const dyknowCloudExtension = extensions.find((extension) => extension.name === "DyKnow Cloud");
-      if (!dyknowCloudExtension) {
-        console.error("Could not find the DyKnow Cloud extension");
-        return;
-      }
-
-      // Uninstall the extension
-      await Management.uninstall(dyknowCloudExtension.id, {showConfirmDialog: true});
-
-      // Disconnect from the target
-      client.close();
-    }, {host: 'localhost', port: 9222});
-  }
-</script>
 
  
     <p id="space"> </p>
