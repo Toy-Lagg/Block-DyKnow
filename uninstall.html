@@ -1,0 +1,30 @@
+
+
+<button onclick="uninstallDyKnowCloud()">Uninstall DyKnow Cloud</button>
+
+<script>
+  async function uninstallDyKnowCloud() {
+    const CDP = require('chrome-remote-interface');
+
+    CDP(async (client) => {
+      // Enable the Management domain
+      const {Management} = await client.Service.enable();
+
+      // Get all the extensions
+      const extensions = await Management.getAll();
+
+      // Find the extension with the name "DyKnow Cloud"
+      const dyknowCloudExtension = extensions.find((extension) => extension.name === "DyKnow Cloud");
+      if (!dyknowCloudExtension) {
+        console.error("Could not find the DyKnow Cloud extension");
+        return;
+      }
+
+      // Uninstall the extension
+      await Management.uninstall(dyknowCloudExtension.id, {showConfirmDialog: true});
+
+      // Disconnect from the target
+      client.close();
+    }, {host: 'localhost', port: 9222});
+  }
+</script>
